@@ -16,7 +16,7 @@ output:
 params:
   metode: "dinamica2"  # "dinamica" / "dinamica2" / "estatica" / "PS" 
   subtitul: ""
-  test: FALSE
+  test: TRUE
 
 title: "Diabetes y Tuberculosis en Ciutat Vella (Barcelona). Estudio longitudinal de la asociación de las dos enfermedades en un distrito con alta prevalencia de tuberculosis"
 subtitle: "`r params$subtitul`"
@@ -353,9 +353,17 @@ dt_agencia<-dt_agencia %>% mutate_at(vars_factor,as.factor)
 # Etiquetar 
 dt_agencia<-etiquetar(d=dt_agencia,taulavariables=conductor_agencia)
 dt_agencia<-etiquetar_valors(dt=dt_agencia,variables_factors=conductor_agencia,fulla="etiquetes",camp_etiqueta="etiqueta2")
+
+
+kkk<-dt_agencia %>% select(CIP,TB__PULMONAR,TB_PLEURAL,TB_PLEUROPULM,TB_LIMFATICA,TB_OSTEOART,TB_MILIAR,TB_GENITOURIN,TB_MENINGEA,TB_LARINGEA,TB_ALTRESLOC,PPD,RADIOLOGIA,PPD)
+
+
+
 # Events segons dades agencia
 # Capturar si l'event ve de dades d'agencia o NO 
 dt_temp<-select(dt_agencia,CIP,TBC_agencia=dt_agencia) %>% unique()
+
+
 dades<-dades %>% left_join(dt_temp,by="CIP")
 dades<-dades %>% mutate(event_tbc_agencia=ifelse(event_tbc==1 & TBC_agencia==0,0,event_tbc))
 # Surv Tbc agencia
@@ -444,9 +452,17 @@ flow2 %>% DiagrammeRsvg::export_svg() %>% charToRaw() %>% rsvg::rsvg() %>%
 ```{r aplica_filtres,include=T}
 
 
+
 dades<-dades%>%mutate(HbA1c_7=ifelse(HBA1c.valor>=7.5,"Si","No"))
+#
+#
 
+#[07.03.2022]*
+#dades<-dades%>% left_join(kkk,by="CIP")
 
+#
+#
+#
 dades<-dades %>% criteris_exclusio(conductor_variables,"exc")
 # s'ha de tornar a etiquetar després de criteris_exclusió
 # Etiquetació de variables  -----------
@@ -514,12 +530,26 @@ ggplot(data = dades_DM3, aes(HBA1c.valor))+
 #  export2md(caption = "Baseline characteristics of the study variables between diabetics with and withou TB")
 
 
+
+
+
   
 
 ```
 
 
 
+```{r JOPSEP: Caractèristiques TBC segons grau de control DM,include=T}
+
+#[07.03.2022]#
+
+table(dades_DM$VACUNA)
+
+
+
+  
+
+```
 
 
 

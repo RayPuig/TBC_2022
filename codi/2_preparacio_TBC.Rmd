@@ -280,10 +280,10 @@ dt_agencia<-dt_agencia %>% left_join(dt_temp,by="CIP") %>% select(-EDAT,-GENERE)
 ```{r}
 
 # Crear directoris output si no existeix
-dir.create(here::here("dades/output"))
-dir.create(here::here("dades/output_dinamic"))
+#dir.create(here::here("dades/output"))
+#dir.create(here::here("dades/output_dinamic"))
 dir.create(here::here("dades/output_dinamic2"))
-dir.create(here::here("dades/output_PS"))
+#dir.create(here::here("dades/output_PS"))
 
 
 save(dt_ecap,dt_agencia, file=here::here(dir_output,"output4.Rdata"))
