@@ -24,7 +24,8 @@ knitr::opts_chunk$set(echo = T, message=T, warning=T, include=T,size="huge")
 # 
 # 1. Càrrega de funcions / llibreries
 gc()
-library(heaven)
+library("heaven")
+
 library(dplyr)
 library(here)
 library(lubridate)
@@ -40,8 +41,6 @@ source(here::here("codi","global_TBC.R"))
 #library("heaven",lib.loc :canviat 9.3.2021   #
 ###############################################
 
-library("heaven",lib.loc="C:/Users/Ramon/Desktop/llibreria_R/heaven_2018")
-library("heaven",lib.loc="C:/Users/38122893W/Desktop/llibreria_R/heaven_2018")
 # Version="2018.08.09"
 # githubinstall::githubinstall("heaven",ref = "964bbbd",force = T)
 library("heaven",lib.loc="C:/Users/38122893W/Desktop/llibreria_R/heaven_2018")
