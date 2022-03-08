@@ -17,6 +17,22 @@
 #################################################################################
 #1_lectura_TBC.Rmd
 #library("heaven",lib.loc="C:/Users/Ramon/Desktop/llibreria_R/heaven_2018")
+#
+#C:\Users\38122893W\Desktop\llibreria_R\heaven_2018
+
+
+# fer-ho: 
+#install.packages("remotes")
+#remotes::install_github("tagteam/heaven")
+
+
+
+library("heaven",lib.loc="C:/Users/38122893W/Desktop/llibreria_R/heaven_2018")
+
+library("heaven")
+
+
+
 #################################################################################
 #3_analisis_TBC.Rmd
 #recode_to_missings funcion   9.3.2021  
