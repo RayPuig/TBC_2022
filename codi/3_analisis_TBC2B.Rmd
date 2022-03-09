@@ -139,6 +139,11 @@ subtitle: "`r params$subtitul`"
 - Subanálisis
 
 ## Consideraciones / limitaciones:
+n b
+
+
+
+
 
 - Solo TBC con fecha disponible
 - Excluidos repetidos
@@ -300,10 +305,16 @@ dades<-etiquetar_valors(dades, variables_factors= conductor_variables,fulla="eti
 # Recode paisos dos agrupacions
 dades<-etiquetar_valors(dades,conductor_variables,fulla = "nacionalitats",camp_etiqueta = "etiqueta2",missings = TRUE,new_vars = T,sufix = ".2")
 dades<-etiquetar_valors(dades,conductor_variables,fulla = "nacionalitats",camp_etiqueta = "etiqueta3",missings = TRUE)
+
+
 # Recode missings --> Espanya
 dades<-dades %>% 
   mutate(descNacionalitat.2=as.character(descNacionalitat.2)) %>% 
   mutate(descNacionalitat.2=if_else(descNacionalitat.2=="No","1. Espanya",descNacionalitat.2))
+
+
+
+#####
 
 ```
 
@@ -810,7 +821,8 @@ formu<-formula_compare(x="basalesJosep2",y="HbA1c_7",taulavariables = conductor_
 #  export2md(caption = "Características basales de las variables de estudio entre diabéticos con y sin TBC [Medias,Sd]")
 
 #descrTable(formu,data=dades %>% filter(grup=="Diabetis"),show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1) %>%
-#  export2md(caption = "Características basales de las variables de estudio entre diabéticos con y sin TBC [Medianas,Min,Max]")
+#
+export2md(caption = "Características basales de las variables de estudio entre diabéticos con y sin TBC [Medianas,Min,Max]")
 
 
 
