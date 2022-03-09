@@ -313,7 +313,10 @@ dades<-dades %>%
   mutate(descNacionalitat.2=if_else(descNacionalitat.2=="No","1. Espanya",descNacionalitat.2))
 
 
-
+###
+#
+#
+#
 #####
 
 ```
