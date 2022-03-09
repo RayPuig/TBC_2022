@@ -313,7 +313,7 @@ dades<-dades %>%
   mutate(descNacionalitat.2=if_else(descNacionalitat.2=="No","1. Espanya",descNacionalitat.2))
 
 
-###
+#####
 #
 #
 #
@@ -493,7 +493,7 @@ dades<-etiquetar(dades,taulavariables = conductor_variables,camp_descripcio = "D
 #table(dades$grup)
 
 
-#ades_DM<-dades %>% filter(grup=="Diabetis")
+dades_DM<-dades %>% filter(grup=="Diabetis")
 
 #table(dades_DM$EV.TBC_cat)
 
@@ -757,15 +757,29 @@ descrTable(formu,data=dades,show.p.overall = T,show.n = T, hide.no = T,hide = "N
 ```{r, include=T,eval = T}
 
 
+
+#aqui hi ha error!!!
+# Events segons dades agencia
+# Capturar si l'event ve de dades d'agencia o NO 
+## dt_temp<-select(dt_agencia,CIP,TBC_agencia=dt_agencia) %>% unique()
+## dades<-dades %>% left_join(dt_temp,by="CIP")
+
+## dades<-dades %>% mutate(event_tbc_agencia=ifelse(event_tbc==1 & TBC_agencia==0,0,event_tbc))
+# Surv Tbc agencia
+## dades$surv_tbc_agencia<-with(dades,Surv(temps_tbc, event_tbc_agencia))
+
+
+
+
+
 #cip::GARR144010100?????
 
-#kkk<-dt_agencia %>%
-#  select(CIP,TB__PULMONAR,TB_PLEURAL,TB_PLEUROPULM,TB_LIMFATICA,TB_OSTEOART,TB_MILIAR,TB_GENITOURIN,TB_MENINGEA,TB_LARINGEA,TB_ALTRESLOC,PPD,RADIOLOGIA,PPD)%>% unique()
+kkk<-dt_agencia %>%select(CIP,TB__PULMONAR,TB_PLEURAL,TB_PLEUROPULM,TB_LIMFATICA,TB_OSTEOART,TB_MILIAR,TB_GENITOURIN,TB_MENINGEA,TB_LARINGEA,TB_ALTRESLOC,PPD,RADIOLOGIA,PPD)%>% unique()
+kkk<-kkk%>% filter( CIP!="GARR144010100")
 
-#dades<-dades %>% left_join(kkk,by="CIP")
+                   
 
-
-
+dades<-dades%>%left_join(kkk,by="CIP")
 
 
 dt_temp<-dades %>% filter(grup=="Diabetis")
@@ -810,21 +824,17 @@ ggplot(data = dades_DM3, aes(HBA1c.valor))+
            theme_classic()
 
 
-
-
-
-
 dades<-mutate_at(dades, vars( starts_with("HbA1c_7") ), funs( if_else(.=="No"  | is.na(.)  ,"No","Si")))
 
 
 formu<-formula_compare(x="basalesJosep2",y="HbA1c_7",taulavariables = conductor_variables)
 
 
-#descrTable(formu,data=dades %>% filter(grup=="Diabetis"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1) %>%
-#  export2md(caption = "Características basales de las variables de estudio entre diabéticos con y sin TBC [Medias,Sd]")
+descrTable(formu,data=dades %>% filter(grup=="Diabetis"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1) %>%
+  export2md(caption = "Características basales de las variables de estudio entre diabéticos con y sin TBC [Medias,Sd]")
 
-#descrTable(formu,data=dades %>% filter(grup=="Diabetis"),show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1) %>%
-#
+descrTable(formu,data=dades %>% filter(grup=="Diabetis"),show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1) %>%
+
 export2md(caption = "Características basales de las variables de estudio entre diabéticos con y sin TBC [Medianas,Min,Max]")
 
 
