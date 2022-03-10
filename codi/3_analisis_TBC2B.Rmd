@@ -980,7 +980,7 @@ pp +
 fit<-survfit(surv_tbc~HbA1c_7,data=dadesDM) 
 
 pp<-ggsurvplot(fit, 
-               title="Figura 2. Incidencia acumulada de tuberculosis por control  DM  ",
+               title="Figura 2.Incidencia acumulada de tuberculosis por controlDM",
                p.val=T, censor=F, linetype="strata",
                fun="event", 
                palette =c("#E7B800", "#2E9FDF"),
