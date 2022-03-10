@@ -621,11 +621,11 @@ dev.off()
 ```
 
 
-# Resultats
+# Resultados
 
-## Exploratori de validació 
+## Exploratorio de validación 
 
-```{r exploratori, message=FALSE, warning=FALSE, include=T, echo=FALSE,size="huge",eval = T}
+```{r exploratori, message=FALSE, warning=FALSE, include=F, echo=FALSE,size="huge",eval = T}
 # T BASAL -------------
 formu<-formula_compare(x="basales",y="grup",taulavariables = conductor_variables)
 descrTable(formu,data=dades,show.p.overall = F,show.n = T,method = 2,Q1=0,Q3=1) %>%
@@ -633,13 +633,13 @@ descrTable(formu,data=dades,show.p.overall = F,show.n = T,method = 2,Q1=0,Q3=1) 
 ```
 
 
-## TABLE 1. Característiques basals per grups
+## TABLA 1. Características basales por grupos
 
-- Descriptiu de característiques basals entre grups
+- Descriptivo de características basales entre grupos
 
-- Table 1. Baseline characteristics of the study variables between diabetics and non-diabetics in both cohorts
+- Tabla 1. Características basales de las variables de estudio entre diabéticos y no diabéticos en ambas cohortes
 
-```{r resultats1, include=T, warning=FALSE,echo=FALSE, message=F,eval = T}
+```{r resultats1, include=F, warning=FALSE,echo=FALSE, message=F,eval = T}
 formu<-formula_compare(x="basales",y="grup",taulavariables = conductor_variables)
 T1_BASAL<-descrTable(formu,data=dades,show.p.overall = T,show.n = T, hide.no = T,hide = "No")
 export2md(T1_BASAL,caption = "Descriptiva de caracterítiques basals entre grups (Frequencia, Mitjana (SD))")
@@ -679,7 +679,7 @@ descrTable(formu,data=dades,show.p.overall = T,show.n = T, hide.no = T,hide = "N
 ```
 
 
-## TABLE 2. Baseline characteristics of patients in diabetic cohort 
+## TABLA 2. Características basales de los pacientes en cohorte diabética
 
 ```{r, include=T,eval = T}
 
@@ -710,10 +710,10 @@ dades<-dades%>%left_join(kkk,by="CIP")
 dadesDM<-dades%>% filter(grup=="Diabetis")
 
 
-dt_temp<-dades %>% filter(grup=="Diabetis")
-formu<-formula_compare(x="table2",y="",taulavariables = conductor_variables)
-descrTable(formu,data=dt_temp,show.p.overall = F,show.n = T, hide.no = T,hide = "No") %>% 
-  export2md(caption = "Table  2. Baseline characteristics of patients in diabetic cohort")
+#dt_temp<-dades %>% filter(grup=="Diabetis")
+#formu<-formula_compare(x="table2",y="",taulavariables = conductor_variables)
+#descrTable(formu,data=dt_temp,show.p.overall = F,show.n = T, hide.no = T,hide = "No") %>% 
+#  export2md(caption = "Table  2. Baseline characteristics of patients in diabetic cohort")
 
 
 formu<-formula_compare(x="basalesJosep",y="EV.TBC_cat",taulavariables = conductor_variables)
@@ -764,15 +764,15 @@ formu<-formula_compare(x="basalesJosep2",y="HbA1c_7",taulavariables = conductor_
 descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1) %>%
   export2md(caption = "Tabla  2c. Características TBC según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
 
-descrTable(formu,data=dadesDM%>% filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1) %>%
-  export2md(caption = "Tabla  2c. Características TBC según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
+#descrTable(formu,data=dadesDM%>% filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1) %>%
+#  export2md(caption = "Tabla  2c. Características TBC según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
 
 
 ```
 
-## TABLE 3. Incidence of TB in DM and non-DM patients 
+## TABLA 3. Incidencia de TB en pacientes DM y no DM
 
-- Incidència global de TBC (TBC només confirmats segons dades ASPB)
+- Incidencia global de TBC (TBC sólo confirmados según datos ASPB)
 
 
 ```{r resultats5, message=FALSE, warning=FALSE, include=T, echo=FALSE,size="huge",eval = T}
@@ -800,14 +800,14 @@ res1b<-tibble::tibble(Group="Overall") %>% bind_cols(res1b)
 res5<-dadesDM %>% split(.$HbA1c_7) %>% map_dfr(~Resum_taxa_incidencia(.x,evento="event_tbc",temps="anys_lliure_tbc",valorevent="1"),.id = "Group") 
 
 
-res1 %>% bind_rows(res2) %>% bind_rows(res3) %>% bind_rows(res4) %>% 
-  kable(digits = 2,caption = "Table 3. Incidence of TB in DM and non-DM patients ") %>% kableExtra::kable_styling()
+#res1 %>% bind_rows(res2) %>% bind_rows(res3) %>% bind_rows(res4) %>% 
+#  kable(digits = 2,caption = "Table 3. Incidence of TB in DM and non-DM patients ") %>% kableExtra::kable_styling()
 
 
 #fet 8.3.2022
 
 res1b %>% bind_rows(res5)  %>%
-  kable(digits = 2,caption = "Table 3b. Incidence of TBc with DM patients  for HbA1c>=7.5%  ") %>% kableExtra::kable_styling()
+  kable(digits = 2,caption = "Tabla 3b. Incidencia de TBc con pacientes DM para HbA1c>=7,5%  ") %>% kableExtra::kable_styling()
 
 
 
@@ -817,9 +817,9 @@ res1b %>% bind_rows(res5)  %>%
 
 
 ```{r resultats6, message=FALSE, warning=FALSE, include=T, echo=FALSE,size="huge",eval=T}
-descrTable(surv_tbc~grup,data=dades,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
-descrTable(surv_tbc~grup2,data=dades,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
-descrTable(surv_tbc~grup3,data=dades,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
+#descrTable(surv_tbc~grup,data=dades,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
+#descrTable(surv_tbc~grup2,data=dades,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
+#descrTable(surv_tbc~grup3,data=dades,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
 
 #10.3.2022:
 descrTable(surv_tbc~HbA1c_7,data=dadesDM,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis pacients amb DM")
@@ -827,7 +827,7 @@ descrTable(surv_tbc~HbA1c_7,data=dadesDM,show.ratio = T, byrow = T ,surv = T) %>
 
 ```
 
-## TABLE 4 Hazard ratios ajustats segons model complet
+## TABLE 4 Hazard ratios ajustados según modelo completo
 
 - HR ajustat segons model de riscos competitius Fine & Grey
 - Grup DM versus control, 
@@ -983,7 +983,9 @@ pp<-ggsurvplot(fit,
                title="Figura 2. Incidencia acumulada de tuberculosis por control  DM  ",
                p.val=T, censor=F, linetype="strata",
                fun="event", 
+               palette =c("#E7B800", "#2E9FDF"),
                cumevents = F,
+               tables.height = 0.01,
                risk.table = FALSE,xscale=365.25,break.x.by = 365.25, conf.int = T)
 pp + 
   xlab("Tiempo en años") + 
