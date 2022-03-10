@@ -1,5 +1,5 @@
 ---
-author: "Ramon Puig, Elena Navas i Jordi Real"
+author: "Ramon Puig, Jordi Real"
 website: "https://github.com/USR-DAPCAT/"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 
@@ -720,10 +720,10 @@ formu<-formula_compare(x="basalesJosep",y="EV.TBC_cat",taulavariables = conducto
 
 
 
-descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1) %>%
+descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
   export2md(caption = "Tabla  2b. Características basales de las variables de estudio entre diabéticos con y sin TBC [Medias,Sd]")
 
-descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1) %>%
+descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1,show.all = TRUE) %>%
   export2md(caption = "Tabla  2b. Características basales de las variables de estudio entre diabéticos con y sin TBC [Medianas,Min,Max]")
 
 
@@ -761,7 +761,7 @@ dades<-mutate_at(dades, vars( starts_with("HbA1c_7") ), funs( if_else(.=="No"  |
 formu<-formula_compare(x="basalesJosep2",y="HbA1c_7",taulavariables = conductor_variables)
 
 
-descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1) %>%
+descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
   export2md(caption = "Tabla  2c. Características TBC según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
 
 #descrTable(formu,data=dadesDM%>% filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1) %>%
