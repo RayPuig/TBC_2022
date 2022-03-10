@@ -139,11 +139,6 @@ subtitle: "`r params$subtitul`"
 - Subanálisis
 
 ## Consideraciones / limitaciones:
-n b
-
-
-
-
 
 - Solo TBC con fecha disponible
 - Excluidos repetidos
@@ -151,7 +146,6 @@ n b
 - Reclasificados expuestos diabeticos en fecha de inclusión (1/2007)
 - Possible infraregistro de diagnosticos en 2007
 - Alto número de valores faltantes en covariables
-
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, include=F,size="huge")
@@ -890,6 +884,11 @@ res1 %>% bind_rows(res5)  %>% bind_rows(res6)  %>%
 descrTable(surv_tbc~grup,data=dades,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
 descrTable(surv_tbc~grup2,data=dades,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
 descrTable(surv_tbc~grup3,data=dades,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
+
+#10.3.2022:
+descrTable(surv_tbc~HbA1c_7,data=dades,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
+#plot(surv_tbc~HbA1c_7,data=dades,show.ratio = T, byrow = T ,surv = T)
+
 ```
 
 ## TABLE 4 Hazard ratios ajustats segons model complet
