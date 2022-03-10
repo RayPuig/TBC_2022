@@ -480,71 +480,7 @@ dades<-etiquetar(dades,taulavariables = conductor_variables,camp_descripcio = "D
 
 
 
-```{r JOPSEP: Baseline characteristics of the study variables between diabetics with and withou TB,include=F,eval = F}
 
-#[03.03.2022]#
-
-#table(dades$grup)
-
-
-dades_DM<-dades %>% filter(grup=="Diabetis")
-
-#table(dades_DM$EV.TBC_cat)
-
-
-
-# T BASAL -------------
-formu<-formula_compare(x="basalesJosep",y="EV.TBC_cat",taulavariables = conductor_variables)
-
-descrTable(formu,data=dades_DM,show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1) %>%
-  export2md(caption = "Características basales de las variables de estudio entre diabéticos con y sin TBC [Medias,Sd]")
-
-descrTable(formu,data=dades_DM,show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1) %>%
-  export2md(caption = "Características basales de las variables de estudio entre diabéticos con y sin TBC [Medianas,Min,Max]")
-
-
-dades_DM2<-dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="Si")
-dades_DM3<-dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="No")
-
-
-
-ggplot(data = dades_DM2, aes(HBA1c.valor))+
-   geom_histogram(bins = 10,aes(y =1*( ..count../sum(..count..)))) +
-    scale_y_continuous(name = "%", labels=scales::percent) +
-      labs(title="Distribució % dels valors HBA1c per decils agrupats per TBC", x ="valors HBA1c", y = "Percentatge")+
-        scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-         scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-           theme_classic()
-
-
-
-ggplot(data = dades_DM3, aes(HBA1c.valor))+
-   geom_histogram(bins = 10,aes(y =1*( ..count../sum(..count..)))) +
-    scale_y_continuous(name = "%", labels=scales::percent) +
-      labs(title="Distribució % dels valors HBA1c per decils agrupats per No TBC", x ="valors HBA1c", y = "Percentatge")+
-        scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-         scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-           theme_classic()
-
-
-
-
-
-#dades_DM2<-dades %>% filter(EV.TBC_cat=="Si")
-
-# T BASAL2 -------------
-#formu2<-formula_compare(x="basalesJosep",y="HbA1c_7",taulavariables = conductor_variables)
-
-#descrTable(formu,data=dades_DM2,show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1) %>%
-#  export2md(caption = "Baseline characteristics of the study variables between diabetics with and withou TB")
-
-
-
-
-
-  
-
-```
 
 
 
@@ -553,10 +489,6 @@ ggplot(data = dades_DM3, aes(HBA1c.valor))+
 #[07.03.2022]#
 
 #table(dades_DM$VACUNA)
-
-
-
-  
 
 ```
 
@@ -766,9 +698,14 @@ descrTable(formu,data=dades,show.p.overall = T,show.n = T, hide.no = T,hide = "N
 
 
 
-#cip::GARR144010100?????
 
-kkk<-dt_agencia %>%select(CIP,TB__PULMONAR,TB_PLEURAL,TB_PLEUROPULM,TB_LIMFATICA,TB_OSTEOART,TB_MILIAR,TB_GENITOURIN,TB_MENINGEA,TB_LARINGEA,TB_ALTRESLOC,PPD,RADIOLOGIA,PPD)%>% unique()
+
+kkk<-dt_agencia %>%
+  select(CIP,MEDEA,INDIGENT,MORT,TB__PULMONAR,TB_PLEURAL,TB_PLEUROPULM,TB_LIMFATICA,TB_OSTEOART,TB_MILIAR,TB_GENITOURIN,TB_MENINGEA,TB_LARINGEA,TB_ALTRESLOC,PPD,RADIOLOGIA,PPD,BACTERIOL)%>% 
+     unique()
+
+
+#cip::GARR144010100?????, preguntar a Jordi Real!
 kkk<-kkk%>% filter( CIP!="GARR144010100")
 
                    

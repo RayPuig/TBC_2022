@@ -2,7 +2,7 @@
 # GENERAR INFORME   #
 #####################
 #
-#07.03.2022
+#10.03.2022
 #
 #17.2.2022#
 #############
@@ -27,7 +27,7 @@
 
 
 
-library("heaven",lib.loc="C:/Users/38122893W/Desktop/llibreria_R/heaven_2018")
+#library("heaven",lib.loc="C:/Users/38122893W/Desktop/llibreria_R/heaven_2018")
 
 library("heaven")
 
