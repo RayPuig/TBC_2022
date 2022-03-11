@@ -149,7 +149,7 @@ subtitle: "`r params$subtitul`"
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, include=F,size="huge")
-library(epiR)
+#library(epiR)
 
 library(ggplot2)
 library(dplyr)

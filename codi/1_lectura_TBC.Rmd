@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = T, message=T, warning=T, include=T,size="huge")
 # 
 # 1. Càrrega de funcions / llibreries
 gc()
-library("heaven")
+#library("heaven")
 
 library(dplyr)
 library(here)
