@@ -1037,7 +1037,7 @@ HR.COX(x="HBcat_ajust2",event = "event_tbc",t="temps_tbc",d=dades,taulavariables
 **Només població diabetica
 
 
-```{r ultimHB, include=T,eval = F}
+```{r ultimHB, include=T,eval = T}
 # datafi 
 dt_temp<-dt_ecap %>% select(CIP,dtindex,dt_lliure_TBC) 
 dt_variables<-dt_variables %>% filter(cod=="HBA1c")
