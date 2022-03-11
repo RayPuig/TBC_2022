@@ -132,6 +132,7 @@ metode="dinamica2"
 rmarkdown::render("./codi/1_lectura_TBC.Rmd",params = list(metode=metode,cas_com_controls=TRUE))
 rmarkdown::render("./codi/2_preparacio_TBC.Rmd",params = list(metode=metode))
 
+#
 
 #gc()
 ###########   Generar informe 

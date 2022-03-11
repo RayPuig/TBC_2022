@@ -148,6 +148,7 @@ dt_cips_antic <- readxl::read_excel(here::here("dades/Cips.xls")) %>% mutate(CIP
 dt_cips <- dt_demografiques %>% select(CIP)
 dt_cips_antic %>% anti_join(dt_cips, by="CIP")
 
+#
 
 ```
 

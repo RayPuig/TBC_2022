@@ -60,7 +60,7 @@ load(here::here(dir_output,"output2.Rdata"))
 # Ojo hi ha desquadre de dtindex de setgruprisk
 dt_ecap<-dt_ecap %>% mutate(grup=ifelse(DG.DM<=ymd(dtindex) & !is.na(DG.DM),1,0))
 
-
+#
 
 # VERIFICAR FARMACS ANTIDIABETICS 
 dt_ecap %>% filter(grup==0 & !is.na(FP.INSU)) %>% select(CIP,grup,DET_TB, FP.INSU,DG.DM,dtindex,data1r_Antidiabetic)

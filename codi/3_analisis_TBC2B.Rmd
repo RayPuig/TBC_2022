@@ -469,7 +469,7 @@ dades<-dades%>%mutate(HbA1c_7=ifelse(HBA1c.valor>=7.5,"Si","No"))
 
 #[07.03.2022]*
 #dades<-dades%>% left_join(kkk,by="CIP")
-
+#
 #
 #
 #
