@@ -463,6 +463,8 @@ flow2 %>% DiagrammeRsvg::export_svg() %>% charToRaw() %>% rsvg::rsvg() %>%
 
 
 dades<-dades%>%mutate(HbA1c_7=ifelse(HBA1c.valor>=7.5,"Si","No"))
+dades<-dades%>%mutate(HbA1c_10=ifelse(HBA1c.valor>=10,"Si","No"))
+
 #
 #
 #dades<-mutate_at(dades, vars( starts_with("HbA1c_7") ), funs( if_else(.=="No"  | is.na(.)  ,"No","Si")))
@@ -833,7 +835,7 @@ descrTable(surv_tbc~HbA1c_7,data=dadesDM,show.ratio = T, byrow = T ,surv = T) %>
 - Grup DM versus control, 
 - DM1 DM2, incident and prevalent versus Control
 
-```{r genero_HR, message=FALSE, warning=FALSE, include=T, echo=FALSE,size="huge",eval = F}
+```{r genero_HR, eval=F, echo=FALSE, message=FALSE, warning=FALSE, include=T, size="huge"}
 # Estimació de HR complets de riscos competitius
 if (params$metode=="dinamica2") cluster="case.id" else cluster=""
 # Ajustos
@@ -980,7 +982,36 @@ pp +
 fit<-survfit(surv_tbc~HbA1c_7,data=dadesDM) 
 
 pp<-ggsurvplot(fit, 
-               title="Figura 2.Incidencia acumulada de tuberculosis por controlDM",
+               title="Figura 2.Incidencia acumulada de tuberculosis por control DM",
+               subtitle = "Estratificado por HbA1c>=7.5 ",
+               p.val=T, censor=F, linetype="strata",
+               fun="event", 
+               palette =c("#E7B800", "#2E9FDF"),
+               cumevents = F,
+               tables.height = 0.01,
+               risk.table = FALSE,xscale=365.25,break.x.by = 365.25, conf.int = T)
+pp + 
+  xlab("Tiempo en años") + 
+  ylab("") 
+
+
+
+
+
+```
+```{r figura3, include=T,eval = T}
+## Figura d'incidencia acumulada de TB per grup  control DM
+# segons K-Meier (TBC)
+
+#descrTable(surv_tbc~HbA1c_7,data=dadesDM,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
+#
+
+
+fit<-survfit(surv_tbc~HbA1c_10,data=dadesDM) 
+
+pp<-ggsurvplot(fit, 
+               title="Figura 2.Incidencia acumulada de tuberculosis por control DM",
+               subtitle = "Estratificado por HbA1c>=10 ",
                p.val=T, censor=F, linetype="strata",
                fun="event", 
                palette =c("#E7B800", "#2E9FDF"),
@@ -1051,8 +1082,11 @@ dt_ecap<-dt_ecap %>% left_join(dt_temp,by=c("CIP","dtindex"))
 dt_ecap<-dt_ecap %>% mutate(HBA1C.ultim.cat=case_when(HBA1C.ultim<7~"<7",
                                              HBA1C.ultim>=7 & HBA1C.ultim<9 ~"[7-9)",
                                              HBA1C.ultim>=9~">=9"))
-dt_ecap %>% filter(HBA1C.ultim>0) %>% select(HBA1C.ultim,HBA1C.ultim.cat)
+
+#dt_ecap %>% filter(HBA1C.ultim>0) %>% select(HBA1C.ultim,HBA1C.ultim.cat)
+
 dt_temp<-dt_ecap %>% filter(grup==1)
+
 descrTable(event_tbc~HBA1C.ultim+HBA1C.ultim.cat+grup,data=dt_temp, show.n = T) %>%
   export2md(caption = "Mitjana i DT de la HBa1c més propera a TBC, vs últim valor Només població diabetica ")
 ```

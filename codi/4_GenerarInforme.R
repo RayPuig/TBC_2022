@@ -2,7 +2,82 @@
 # GENERAR INFORME   #
 #####################
 #
-#11.03.2022
+#14.03.2022
+#
+#
+#
+#
+#
+#DUBTES:
+#Table 1. Baseline characteristics of the study variables between diabetics with and without TB
+#
+
+
+#DUBTE 10:
+
+#Glycosylated haemoglobin
+#- <7.5%
+#- >= 7.5
+
+#He tallat la HbA1c a 7,5% perque em semblava que a la nostra mostra es
+#el que millor separa els que faran i els que no faran TB (però tampoc es una meravella 7,66 vs 7,41)
+#Potser si fem corbes de  supervivencia de KM o corbes ROC per veure valor predictiu)
+#Faig poques categories per augmentar la potencia estadística
+
+
+#DUBTE 12:
+
+#DM complications
+#-	Macrovascular disease
+#-	Diabetic retinopathy 
+#-	Diabetic nephropathy
+#-	Diabetic neuropathy
+
+#FALTEN AQUESTES 2 COMPLICACIONS
+#Tampoc he trobat aquestes dades al SPSS ni al analisi preliminar que haviau fet
+
+
+#DUBTE 14:
+
+#Flu vaccination   no sé si està aquesta dada
+#crec que no tenim aquesta dada
+
+
+#DUBTE 16:
+#Taula 2.:
+
+
+#DUBTE 17:
+#Radiography
+#•	Normal
+#•	Cavern
+#•	Anormal no cavern
+
+#CAP CAVERNA?
+#  comprobar que crec que està be … em sembla que està equivocat
+
+#DUBTE 19:
+#Pauta de tratamiento
+#Aqui haurem de posar les pautes que trobem al analisi descriptiu, potser agruparles en pautes sencilles i pautes no habituals …. O similar.
+#Caldria fer una exploració inicial de les pautes de Tt que tenim enregistrades i despres pensem en agrupar-les
+#Crec que al final les agruparem amb:
+#- No tt farmacologic
+#- Tto ADNI’s (no insulina)
+#- Tt amb Insulina
+#Aquí sí que haurien de sumar 100% si fem aquestes 3 categories
+#
+#
+#DUBTE 20:
+#Resistencies
+#Treballar mes les característiques segons les variables que figurin a la BD de la Agencia
+#Cal mirar com esta la variable a la BD
+#Fer un llistat de variables que puguem btenir
+
+
+
+
+
+
 #
 #17.2.2022#
 #############
