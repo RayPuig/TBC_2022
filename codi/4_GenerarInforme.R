@@ -67,6 +67,7 @@
 #Aquí sí que haurien de sumar 100% si fem aquestes 3 categories
 #
 #
+
 #DUBTE 20:
 #Resistencies
 #Treballar mes les característiques segons les variables que figurin a la BD de la Agencia

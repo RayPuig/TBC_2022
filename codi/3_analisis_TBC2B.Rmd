@@ -1052,17 +1052,54 @@ res.cox %>% sjPlot::tab_model(show.p = FALSE)
 ```{r, include=T,eval = F}
 HR.COX(x="HB_cru",event = "event_tbc",t="temps_tbc",d=dades,taulavariables = conductor_variables,c=cluster) %>% 
   kable(digits = 3,caption = "HR segons increment de HbA1c(%)") %>% kableExtra::kable_styling()
+
 HR.COX(x="HB_ajust",event = "event_tbc",t="temps_tbc",d=dades,taulavariables = conductor_variables,c=cluster) %>% 
   kable(digits = 3,caption = "HR ajustats segons covariables") %>% kableExtra::kable_styling()
+
 HR.COX(x="HB_ajust2",event = "event_tbc",t="temps_tbc",d=dades,taulavariables = conductor_variables,c=cluster) %>% 
   kable(digits = 3,caption = "HR ajustats segons covariables") %>% kableExtra::kable_styling()
+
 HR.COX(x="HBcat_cru",event = "event_tbc",t="temps_tbc",d=dades,taulavariables = conductor_variables,c=cluster) %>% 
   kable(digits = 3,caption = "HR segons increment de HbA1c(%)") %>% kableExtra::kable_styling()
+
 HR.COX(x="HBcat_ajust",event = "event_tbc",t="temps_tbc",d=dades,taulavariables = conductor_variables,c=cluster) %>% 
   kable(digits = 3,caption = "HR ajustats segons covariables") %>% kableExtra::kable_styling()
+
 HR.COX(x="HBcat_ajust2",event = "event_tbc",t="temps_tbc",d=dades,taulavariables = conductor_variables,c=cluster) %>% 
   kable(digits = 3,caption = "HR ajustats segons covariables") %>% kableExtra::kable_styling()
+
+
 ```
+
+```{r, include=T,eval = F}
+
+#14.03.2022# ???? DEMÀ!!
+
+HR.COX(x="HB_cru",event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariables = conductor_variables,c=cluster) %>% 
+  kable(digits = 3,caption = "HR segons increment de HbA1c(%)") %>% kableExtra::kable_styling()
+
+HR.COX(x="HB_ajust",event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariables = conductor_variables,c=cluster) %>% 
+  kable(digits = 3,caption = "HR ajustats segons covariables") %>% kableExtra::kable_styling()
+
+HR.COX(x="HB_ajust2",event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariables = conductor_variables,c=cluster) %>% 
+  kable(digits = 3,caption = "HR ajustats segons covariables") %>% kableExtra::kable_styling()
+
+HR.COX(x="HBcat_cru",event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariables = conductor_variables,c=cluster) %>% 
+  kable(digits = 3,caption = "HR segons increment de HbA1c(%)") %>% kableExtra::kable_styling()
+
+HR.COX(x="HBcat_ajust",event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariables = conductor_variables,c=cluster) %>% 
+  kable(digits = 3,caption = "HR ajustats segons covariables") %>% kableExtra::kable_styling()
+
+HR.COX(x="HBcat_ajust2",event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariables = conductor_variables,c=cluster) %>% 
+  kable(digits = 3,caption = "HR ajustats segons covariables") %>% kableExtra::kable_styling()
+
+
+```
+
+
+
+
+
 
 > Comparativa de mitjanes últim valor HBA1c entre TBC i no TBC's 
 **Només població diabetica
