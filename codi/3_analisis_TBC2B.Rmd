@@ -999,7 +999,8 @@ pp +
 
 
 ```
-```{r figura3, include=T,eval = T}
+
+```{r figura3, include=T,eval = FALSE}
 ## Figura d'incidencia acumulada de TB per grup  control DM
 # segons K-Meier (TBC)
 
@@ -1018,9 +1019,9 @@ pp<-ggsurvplot(fit,
                cumevents = F,
                tables.height = 0.01,
                risk.table = FALSE,xscale=365.25,break.x.by = 365.25, conf.int = T)
-pp + 
-  xlab("Tiempo en años") + 
-  ylab("") 
+#pp + 
+#  xlab("Tiempo en años") + 
+#  ylab("") 
 
 
 
@@ -1062,10 +1063,6 @@ res.cox %>% sjPlot::tab_model(show.p = TRUE)
 
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ HbA1c_7+sexe+age, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE)
-
-
-
-
 
 
 
@@ -1313,7 +1310,7 @@ save(dades,dt_variables, file=here::here(dir_output,"output5.Rdata"))
 
 
 ## Dependenet Time Variable DM Cox   HBA1c us TBC
-```{r, include=T,eval = F}
+```{r, include=T,eval = TRUE}
 
 #############
 #[26.3.2021]#
@@ -1521,7 +1518,7 @@ analitiques_temps<-analitiques_temps %>% mutate(edat_CAT=case_when(edat<75 ~ "1.
 
 ```
 ## Dependenet Time Variable DM Cox   HBA1c us TBC    MODEL1[glicada continua]
-```{r MODEL1, include=T,eval = F}
+```{r MODEL1, include=T,eval = TRUE}
 
 #############
 #[26.3.2021]#
@@ -1529,14 +1526,22 @@ analitiques_temps<-analitiques_temps %>% mutate(edat_CAT=case_when(edat<75 ~ "1.
 
 #
 
-#library(kableExtra)
-#library(gt)
-#library(survival)
+library(kableExtra)
+library(gt)
+library(survival)
 
 
 #i)
-#fit1 <- coxph(Surv(tstart, tstop, situacio=="TBC") ~ val+sexe+edat+cluster(idp),data=analitiques_temps)
-#fit1
+fit1 <- coxph(Surv(tstart, tstop, situacio=="TBC") ~ val+sexe+edat+cluster(idp),data=analitiques_temps)
+
+
+
+summary(fit1)
+  
+
+
+
+
 #cox.zph(fit1)
 #plot(cox.zph(fit1))
 
