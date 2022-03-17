@@ -1040,8 +1040,36 @@ res.cox %>% sjPlot::tab_model(show.p = FALSE)
 # survminer::ggadjustedcurves(res.cox, data=dades,method = "average", variable = "grup" ,  fun="event",
 #                  title="Fitted Cox Model to TB detection in patient with or without DM")
 # 
+
+
+
+
+
+
 ```
 
+
+
+```{r figura_COX2, include=T, fig.asp=1, results="asis", eval=T, include=T}
+## Gràfica estimada del Model de cox
+
+if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ HbA1c_7, data=dadesDM) 
+res.cox %>% sjPlot::tab_model(show.p = TRUE)
+
+if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ HbA1c_7+sexe, data=dadesDM) 
+res.cox %>% sjPlot::tab_model(show.p = TRUE)
+
+
+if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ HbA1c_7+sexe+age, data=dadesDM) 
+res.cox %>% sjPlot::tab_model(show.p = TRUE)
+
+
+
+
+
+
+
+```
 
 
 

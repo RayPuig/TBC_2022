@@ -2,12 +2,35 @@
 # GENERAR INFORME   #
 #####################
 #
-#14.03.2022
+#17.03.2022
+#
+# TAULA1
+#i)     MACRO:= CI,AVC,ARTPER,COM_OFT
+#ii)    antecedents Tb prèvia o?(DM)
+#iii)   Vacunes , dt_vacunes
 #
 #
-#
-#
-#
+
+# TAULA2
+#i)     TOTAL[<7.5,>=7.5,Missings!]
+#ii)    Cavern? 0? 
+#iii)   Resistències
+
+# TAULA3
+#i)     Ajustar: HR:: Edat,Sexe.
+
+# TAULA4: anàlisi multivariant 
+#         i)            EdAT
+#         ii)           Sexe
+#         iii)          Temps Dm
+#         iv)           Complicacio Macro 
+#         v)            Complicacio Micro [Retina+Nefro]
+#         vi)           Tabac
+#         vii)          Medaea
+#         viii)         Alcohol
+#         ix)           IMC
+##########################
+
 #DUBTES:
 #Table 1. Baseline characteristics of the study variables between diabetics with and without TB
 #
