@@ -630,8 +630,11 @@ dev.off()
 ```{r exploratori, message=FALSE, warning=FALSE, include=F, echo=FALSE,size="huge",eval = T}
 # T BASAL -------------
 formu<-formula_compare(x="basales",y="grup",taulavariables = conductor_variables)
+
 descrTable(formu,data=dades,show.p.overall = F,show.n = T,method = 2,Q1=0,Q3=1) %>%
   export2md(caption = "Mediana [Min; Max] Descriptiva de validació per grups")
+
+
 ```
 
 
@@ -731,29 +734,53 @@ descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1
 
 
 
+
+
+
+
+genera_figures_HTG<-function(dt=dades,subtitul="",lim1=0,lim2=20,bins=150) {
+  
+
+
+      ggplot(data = dt, aes(HBA1c.valor))+
+       geom_histogram(bins = bins,aes(y =1*( ..count../sum(..count..)))) +
+        scale_y_continuous(name = "%", labels=scales::percent) +
+          labs(title=paste0("Distribució dels HBA1c "),
+               subtitle = subtitul, x ="HBA1c ")+
+            scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
+             scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
+               theme_classic() +
+                xlim(lim1,lim2) 
+   
+
+}
+
 dadesDM2<-dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="Si")
 dadesDM3<-dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="No")
 
 
-
-
-ggplot(data = dadesDM2, aes(HBA1c.valor))+
-   geom_histogram(bins = 10,aes(y =1*( ..count../sum(..count..)))) +
-    scale_y_continuous(name = "%", labels=scales::percent) +
-      labs(title="Distribució % dels valors HBA1c per decils agrupats per TBC", x ="valors HBA1c", y = "Percentatge")+
-        scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-         scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-           theme_classic()
+dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="Si") %>% genera_figures_HTG("Distribució % dels valors HBA1c  per TBC",lim2=20,bins=18)
+dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="No") %>% genera_figures_HTG("Distribució % dels valors HBA1c  per No TBC",lim2=20)
 
 
 
-ggplot(data = dadesDM3, aes(HBA1c.valor))+
-   geom_histogram(bins = 10,aes(y =1*( ..count../sum(..count..)))) +
-    scale_y_continuous(name = "%", labels=scales::percent) +
-      labs(title="Distribució % dels valors HBA1c per decils agrupats per No TBC", x ="valors HBA1c", y = "Percentatge")+
-        scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-         scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-           theme_classic()
+#ggplot(data = dadesDM2, aes(HBA1c.valor))+
+#   geom_histogram(bins = 10,aes(y =1*( ..count../sum(..count..)))) +
+#    scale_y_continuous(name = "%", labels=scales::percent) +
+#      labs(title="Distribució % dels valors HBA1c per decils agrupats per TBC", x ="valors HBA1c", y = "Percentatge")+
+#        scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
+#         scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
+#           theme_classic()
+
+
+
+#ggplot(data = dadesDM3, aes(HBA1c.valor))+
+#   geom_histogram(bins = 10,aes(y =1*( ..count../sum(..count..)))) +
+#    scale_y_continuous(name = "%", labels=scales::percent) +
+#      labs(title="Distribució % dels valors HBA1c per decils agrupats per No TBC", x ="valors HBA1c", y = "Percentatge")+
+#        scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
+#         scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
+#           theme_classic()
 
 
 
