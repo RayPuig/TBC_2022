@@ -844,17 +844,17 @@ dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="No") %>% genera_figures_HTG("Di
 
 formu<-formula_compare(x="basalesJosep2",y="HbA1c_7.5",taulavariables = conductor_variables)
 
-descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
-  export2md(caption = "Tabla  2c. Características DM-AGENCIA según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
+#descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
+#  export2md(caption = "Tabla  2c. Características DM-AGENCIA según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
 
 
 
 descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
-  export2md(caption = "Tabla  2c. Características TBC según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
+  export2md(caption = "Tabla  2c. Características TBC en Poblacion Diabetica según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
 
 
 descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="No"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
-  export2md(caption = "Tabla  2c. Características NO TBC según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
+  export2md(caption = "Tabla  2c. Características NO TBC en Poblacion Diabetica  según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
 
 
 #descrTable(formu,data=dadesDM%>% filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1) %>%
@@ -1168,49 +1168,69 @@ res.cox %>% sjPlot::tab_model(show.p = TRUE)
 
 
 
+
+
 #[]# MODEL:[]
 
+#[surv_tbc ~ sexe+age+DM_anys]#i) N=8004
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model 1")
 
-
+#[surv_tbc ~ sexe+age+DM_anys+MACRO]*ii) N=8004
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model 2")
 
+#[surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO]#iii)  N=8004
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model 3")
 
-
+#[surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat]#iv)  N=8004
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model 4")
 
+#[surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat]#v) N=8004
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model 5")
 
 
+
+#[surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor]#vi) N=2700
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model 6")
 
-
+#[surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5]#vii) N=1726
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model 7")
 
-# MODEL1::
+#[surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+HbA1c_7.5]#viii) N=3323
+if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+HbA1c_7.5, data=dadesDM) 
+res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model 8")
+
+
+#[surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+HbA1c_7.5]#ix) N=3323
+if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+HbA1c_7.5, data=dadesDM) 
+res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model 9")
+
+
+
+# MODEL1::N=1726
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model Final1:Analisi Multivariant dels factors que en el DM poden influir al TBC")
 
-# MODEL2::
+# MODEL2::N=1726
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model Final2:Analisi Multivariant dels factors que en el DM poden influir al TBC")
 
-# MODEL3::
+
+
+# MODEL3::n=3323
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+HbA1c_7.5, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model Final3:Analisi Multivariant dels factors que en el DM poden influir al TBC")
 
 
-# MODEL4::
-if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor+HBA1c.valor, data=dadesDM) 
-res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model Final4:Analisi Multivariant dels factors que en el DM poden influir al TBC")
+# MODEL4::n=3323
+#if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+HBA1c.valor, data=dadesDM) 
+#res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model Final4:Analisi Multivariant dels factors que en el DM poden influir al TBC")
 
 
 
@@ -1661,14 +1681,12 @@ analitiques_temps<-analitiques_temps %>% mutate(edat_CAT=case_when(edat<75 ~ "1.
 
 
 
-# Ara fem els MODELS!:[]
-
 
 
 
 ```
 ## Dependenet Time Variable DM Cox   HBA1c us TBC    MODEL1[glicada continua]
-```{r MODEL1, include=T,eval = TRUE}
+```{r MODEL1, include=F,eval = FALSE}
 
 #############
 #[26.3.2021]#
@@ -1915,6 +1933,59 @@ summary(fit1)
 
 
 #plot(survfit(fit14),ylim=c(0.5,1),lty=0:1)
+
+dadesDM %>% filter(event_tbc==1) %>% select(CIP,TB__PULMONAR,TB_PLEURAL)
+
+names(dadesDM)
+
+```
+## Dependenet Time Variable DM Cox   HBA1c us TBC [val_7_5+strata(sexe)+edat_CAT+cluster(idp)]
+```{r MODEL10, include=T,eval = TRUE}
+
+#############
+#[26.3.2021]#
+#############
+
+
+
+library(kableExtra)
+library(gt)
+library(survival)
+
+# Ara fem els MODELS!:[]
+
+analitiques_temps<-analitiques_temps%>%mutate(val_7_5 = ifelse(val<7.5 | is.na(val)   , 0, 1))
+analitiques_temps<-analitiques_temps%>%mutate(val_8 =   ifelse(val<8   | is.na(val)   , 0, 1))
+analitiques_temps<-analitiques_temps%>%mutate(val_9 =   ifelse(val<9   | is.na(val)   , 0, 1))
+
+
+
+#i)
+fit1 <- coxph(Surv(tstart, tstop, situacio=="TBC") ~ val_7_5+sexe+edat+cluster(idp),data=analitiques_temps)
+summary(fit1)
+cox.zph(fit1)
+plot(cox.zph(fit1))
+
+#ii)
+fit2 <- coxph(Surv(tstart, tstop, situacio=="TBC") ~ val_8+sexe+edat+cluster(idp),data=analitiques_temps)
+summary(fit2)
+cox.zph(fit1)
+plot(cox.zph(fit1))
+
+#iii)
+fit3 <- coxph(Surv(tstart, tstop, situacio=="TBC") ~ val_9+sexe+edat+cluster(idp),data=analitiques_temps)
+summary(fit3)
+cox.zph(fit3)
+plot(cox.zph(fit3))
+
+
+
+
+
+
+
+#dadesDM %>% filter(event_tbc==1) %>% select(CIP,TB__PULMONAR,TB_PLEURAL)
+#names(dadesDM)
 
 ```
 
