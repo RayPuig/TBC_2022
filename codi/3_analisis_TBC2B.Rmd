@@ -714,10 +714,6 @@ descrTable(formu,data=dades,show.p.overall = T,show.n = T, hide.no = T,hide = "N
 
 
 
-
-
-
-
 temp<-dt_agencia %>%
   select(CIP,MEDEA,INDIGENT,GRUP_OCUP,MORT2,TB__PULMONAR,TB_PLEURAL,TB_PLEUROPULM,TB_LIMFATICA,TB_OSTEOART,TB_MILIAR,TB_GENITOURIN,TB_MENINGEA,TB_LARINGEA,TB_ALTRESLOC,PPD,RADIOLOGIA,PPD,BACTERIOL)%>% 
      unique()
@@ -783,10 +779,10 @@ formu<-formula_compare(x="basalesJosep",y="EV.TBC_cat",taulavariables = conducto
 
 
 descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
-  export2md(caption = "Tabla  2b. Características basales de las variables de estudio entre diabéticos con y sin TBC [Medias,Sd]")
+  export2md(caption = "Tabla  1. Características basales de las variables de estudio entre diabéticos con y sin TBC [Medias,Sd]")
 
 descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1,show.all = TRUE) %>%
-  export2md(caption = "Tabla  2b. Características basales de las variables de estudio entre diabéticos con y sin TBC [Medianas,Min,Max]")
+  export2md(caption = "Tabla  1. Características basales de las variables de estudio entre diabéticos con y sin TBC [Medianas,Min,Max]")
 
 
 
@@ -850,11 +846,11 @@ formu<-formula_compare(x="basalesJosep2",y="HbA1c_7.5",taulavariables = conducto
 
 
 descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
-  export2md(caption = "Tabla  2c. Características TBC en Poblacion Diabetica según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
+  export2md(caption = "Tabla  2. Características TBC en Poblacion Diabetica según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
 
 
 descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="No"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
-  export2md(caption = "Tabla  2c. Características NO TBC en Poblacion Diabetica  según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
+  export2md(caption = "Tabla  2. Características NO TBC en Poblacion Diabetica  según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
 
 
 #descrTable(formu,data=dadesDM%>% filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1) %>%
@@ -1151,7 +1147,7 @@ res.cox %>% sjPlot::tab_model(show.p = FALSE)
 
 ```
 
-
+## Tabla.3 Modelos. Análisis multivariante de los factores que pueden influir en la aparición de una nueva TBC, en una Población Diabetica
 
 ```{r figura_COX2, include=T, fig.asp=1, results="asis", eval=T, include=T}
 ## Gràfica estimada del Model de cox
@@ -1211,7 +1207,7 @@ res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model 8")
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+HbA1c_7.5, data=dadesDM) 
 res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model 9")
 
-
+#----------------------------------------------------------------------------------------#
 
 # MODEL1::N=1726
 if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
@@ -1232,6 +1228,7 @@ res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model Final3:Analisi Multiv
 #if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+HBA1c.valor, data=dadesDM) 
 #res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Model Final4:Analisi Multivariant dels factors que en el DM poden influir al TBC")
 
+#----------------------------------------------------------------------------------------#
 
 
 
@@ -1300,7 +1297,7 @@ HR.COX(x="HBcat_ajust2",event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariabl
 **Només població diabetica
 
 
-```{r ultimHB, include=T,eval = T}
+```{r ultimHB, include=T,eval = F}
 # datafi 
 dt_temp<-dt_ecap %>% select(CIP,dtindex,dt_lliure_TBC) 
 dt_variables<-dt_variables %>% filter(cod=="HBA1c")
@@ -1480,7 +1477,7 @@ save(dades,dt_variables, file=here::here(dir_output,"output5.Rdata"))
 
 
 ## Dependenet Time Variable DM Cox   HBA1c us TBC
-```{r, include=T,eval = TRUE}
+```{r, include=F,eval = TRUE}
 
 #############
 #[26.3.2021]#
@@ -1671,8 +1668,8 @@ analitiques_temps<-Analitica_Temps(
 analitiques_temps<-analitiques_temps%>%left_join(dades2,by="idp")
 
 
-analitiques_temps<-analitiques_temps%>%mutate(val2 = ifelse(val<8 | is.na(val) , 0, 1))
-analitiques_temps<-analitiques_temps%>%mutate(val3 = ifelse(val<9 | is.na(val) , 0, 1))
+analitiques_temps<-analitiques_temps%>%mutate(val2 = ifelse(val<8  , 0, 1))
+analitiques_temps<-analitiques_temps%>%mutate(val3 = ifelse(val<9  , 0, 1))
 
 #analitiques_temps
 #analitiques_temps$situacio
@@ -1939,11 +1936,12 @@ dadesDM %>% filter(event_tbc==1) %>% select(CIP,TB__PULMONAR,TB_PLEURAL)
 names(dadesDM)
 
 ```
-## Dependenet Time Variable DM Cox   HBA1c us TBC [val_7_5+strata(sexe)+edat_CAT+cluster(idp)]
-```{r MODEL10, include=T,eval = TRUE}
+## Tabla.4a Modelos de Cox dependientes del Tiempo (HBA1c) para la TBC.[Hba1c>7.5+Sexe+Edat+cluster(idp]
+
+```{r MODEL_COX1, include=T,eval = TRUE}
 
 #############
-#[26.3.2021]#
+#[25.3.2022]#
 #############
 
 
@@ -1954,9 +1952,9 @@ library(survival)
 
 # Ara fem els MODELS!:[]
 
-analitiques_temps<-analitiques_temps%>%mutate(val_7_5 = ifelse(val<7.5 | is.na(val)   , 0, 1))
-analitiques_temps<-analitiques_temps%>%mutate(val_8 =   ifelse(val<8   | is.na(val)   , 0, 1))
-analitiques_temps<-analitiques_temps%>%mutate(val_9 =   ifelse(val<9   | is.na(val)   , 0, 1))
+analitiques_temps<-analitiques_temps%>%mutate(val_7_5 = ifelse(val<7.5    , 0, 1))
+analitiques_temps<-analitiques_temps%>%mutate(val_8 =   ifelse(val<8      , 0, 1))
+analitiques_temps<-analitiques_temps%>%mutate(val_9 =   ifelse(val<9      , 0, 1))
 
 
 
@@ -1964,28 +1962,31 @@ analitiques_temps<-analitiques_temps%>%mutate(val_9 =   ifelse(val<9   | is.na(v
 fit1 <- coxph(Surv(tstart, tstop, situacio=="TBC") ~ val_7_5+sexe+edat+cluster(idp),data=analitiques_temps)
 summary(fit1)
 cox.zph(fit1)
-plot(cox.zph(fit1))
+#plot(cox.zph(fit1))
+
+
+```
+
+## Tabla.4b Modelos de Cox dependientes del Tiempo (HBA1c) para la TBC.[Hba1c>8+Sexe+Edat+cluster(idp]
+
+```{r MODEL_COX2, include=T,eval = TRUE}
 
 #ii)
-fit2 <- coxph(Surv(tstart, tstop, situacio=="TBC") ~ val_8+sexe+edat+cluster(idp),data=analitiques_temps)
-summary(fit2)
-cox.zph(fit1)
-plot(cox.zph(fit1))
-
-#iii)
-fit3 <- coxph(Surv(tstart, tstop, situacio=="TBC") ~ val_9+sexe+edat+cluster(idp),data=analitiques_temps)
+fit3 <- coxph(Surv(tstart, tstop, situacio=="TBC") ~ val_8+sexe+edat+cluster(idp),data=analitiques_temps)
 summary(fit3)
 cox.zph(fit3)
-plot(cox.zph(fit3))
 
 
+```
 
+## Tabla.4c Modelos de Cox dependientes del Tiempo (HBA1c) para la TBC.[Hba1c>9+Sexe+Edat+cluster(idp]
 
+```{r MODEL_COX3, include=T,eval = TRUE}
 
-
-
-#dadesDM %>% filter(event_tbc==1) %>% select(CIP,TB__PULMONAR,TB_PLEURAL)
-#names(dadesDM)
+#iii)
+fit2 <- coxph(Surv(tstart, tstop, situacio=="TBC") ~ val_9+sexe+edat+cluster(idp),data=analitiques_temps)
+summary(fit2)
+cox.zph(fit1)
 
 ```
 
