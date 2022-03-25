@@ -1289,11 +1289,6 @@ HR.COX(x="HBcat_ajust2",event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariabl
 
 ```
 
-
-
-
-
-
 > Comparativa de mitjanes últim valor HBA1c entre TBC i no TBC's 
 **Només població diabetica
 
@@ -1899,7 +1894,7 @@ summary(fit1)
 
 ```
 
-## Dependenet Time Variable DM Cox   HBA1c us TBC [val3+strata(sexe)+edat_CAT+cluster(idp)]
+# 5. Modelos de Cox dependientes del Tiempo (HBA1c) para la TBC
 
 ```{r MODEL8, include=T,eval = F}
 
