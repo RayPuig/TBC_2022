@@ -683,7 +683,7 @@ descrTable(formu,data=dades,show.p.overall = T,show.n = T, hide.no = T,hide = "N
 ```
 
 
-## TABLA 1. Características basales de los pacientes en cohorte diabetica
+# TABLA 1.TABLA2:  Características basales de los pacientes en cohorte diabetica
 
 ```{r, include=T,eval = T}
 
@@ -870,7 +870,7 @@ descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="No"),show.p.overall = T,show
 
 ```
 
-## TABLA 3. Incidencia de TB en pacientes DM y no DM
+# TABLA 3. Incidencia de TB en pacientes DM y no DM
 
 - Incidencia global de TBC (TBC sólo confirmados según datos ASPB)
 
@@ -1147,7 +1147,7 @@ res.cox %>% sjPlot::tab_model(show.p = FALSE)
 
 ```
 
-## Tabla.4b Modelos.Análisis multivariante de los factores que pueden influir en la aparición de una nueva TBC, en una Población Diabetica
+# Tabla.4b Modelos.Análisis multivariante de los factores que pueden influir en la aparición de una nueva TBC, en una Población Diabetica
 
 ```{r figura_COX2, include=T, fig.asp=1, results="asis", eval=T, include=T}
 
