@@ -43,7 +43,11 @@ source(here::here("codi","global_TBC.R"))
 
 # Version="2018.08.09"
 # githubinstall::githubinstall("heaven",ref = "964bbbd",force = T)
+
+library("heaven")
 library("heaven",lib.loc="C:/Users/38122893W/Desktop/llibreria_R/heaven_2018")
+
+
 
 
 
@@ -157,6 +161,8 @@ dt_cips_antic %>% anti_join(dt_cips, by="CIP")
 ```{r Formatar1, cache=TRUE}
 # Formatar dates
 
+#TB _PULMONAR"    "TB_PLEURAL"      "TB_PLEUROPULM"   "TB_LIMFATICA"    "TB_OSTEOART"     "TB_MILIAR"       "TB_GENITOURIN"  
+# "TB_MENINGEA"     "TB_LARINGEA"     "TB_ALTRESLOC" 
 
 
 dt_dades<-dt_dades %>% mutate(DATA_NAIX=as.Date(DATA_NAIX, origin = "1899-12-30"),
@@ -178,6 +184,10 @@ dt_dades<-dt_dades %>% mutate(DET_TB_ECAP=DET_TB,
                               DET_TB=pmin(INICITRACT,DAT_NOTIF,na.rm = T))
 
 
+
+
+
+
 # Actualitzar dt_demografiques  amb dades generals de l'agencia (sobretot els 1643 que no teniem en E-cap)
 # Formatejo dades de dt_dades
 dades_temp<- dt_dades %>% transmute(CIP,
@@ -192,6 +202,10 @@ dades_temp<- dt_dades %>% transmute(CIP,
 
 
 
+
+
+
+
 # selecciono només aquells CIPS que no estan a dades demografiques (n=1643)
 dades_temp<-dades_temp %>% anti_join(dt_demografiques,by="CIP") 
 
@@ -201,13 +215,46 @@ rm(dades_temp)
 # agafar CIPS unics
 dt_demografiques<-dt_demografiques %>% group_by(CIP) %>% slice(1) %>% ungroup()
 
+#[29.03.2022]
+
+#temp<-dt_agencia %>%
+#  select(CIP,MEDEA,INDIGENT,GRUP_OCUP,MORT2,PPD,RADIOLOGIA,PPD,BACTERIOL)%>% 
+#     unique()
+
+
 #     Capturo primera data_TBC de dades_dt (Agencia) en dt_demografiques  ---------------
-temp<-dt_dades %>% select(CIP,DET_TB) %>% group_by(CIP) %>% slice(which.min(DET_TB)) %>% ungroup() 
+temp<-dt_dades %>% select(CIP,DET_TB,
+                          "TB _PULMONAR",
+                          TB_PLEURAL,
+                          TB_PLEUROPULM,   
+                          TB_LIMFATICA,    
+                          TB_OSTEOART,
+                          TB_MILIAR,
+                          TB_GENITOURIN,
+                          TB_MENINGEA,
+                          TB_LARINGEA,
+                          TB_ALTRESLOC,
+                          MEDEA,
+                          INDIGENT,
+                          GRUP_OCUP,
+                          PPD,
+                          RADIOLOGIA,
+                          BACTERIOL) %>%
+  group_by(CIP) %>% slice(which.min(DET_TB)) %>% ungroup() 
+
+
 dt_demografiques<-dt_demografiques %>% left_join(temp,by="CIP")
 # Afegeixo segon event de TBC
+
+
 temp2<-dt_dades %>% select(CIP,DET_TB) %>% group_by(CIP) %>% slice(which.max(DET_TB)) %>% ungroup() %>% transmute(CIP,DET2_TB=DET_TB)
+
 dt_demografiques<-dt_demografiques %>% left_join(temp2,by="CIP") %>% mutate(DET2_TB=ifelse(DET2_TB==DET_TB,NA,DET2_TB)) 
 rm(temp,temp2)
+
+
+#[]#
+
 
 # Elimino difuns previs a 2007 (dades ecap (dt_demografiques) i dades agencia (dt_dades))
 dt_demografiques<-dt_demografiques %>% filter(!(situacio=="D" & dsituacio<lubridate::ymd(20070101)))

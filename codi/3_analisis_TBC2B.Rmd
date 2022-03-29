@@ -712,41 +712,44 @@ descrTable(formu,data=dades,show.p.overall = T,show.n = T, hide.no = T,hide = "N
 #temp2<-etiquetar_valors(temp, variables_factors=conductor_agencia,fulla="etiquetes",camp_etiqueta="etiqueta2")
 
 
+#TB__PULMONAR,TB_PLEURAL,TB_PLEUROPULM,TB_LIMFATICA,TB_OSTEOART,TB_MILIAR,TB_GENITOURIN,TB_MENINGEA,TB_LARINGEA,TB_ALTRESLOC
 
+#temp<-dt_agencia %>%
+#  select(CIP,MEDEA,INDIGENT,GRUP_OCUP,MORT2,PPD,RADIOLOGIA,PPD,BACTERIOL)%>% 
+#     unique()
 
-temp<-dt_agencia %>%
-  select(CIP,MEDEA,INDIGENT,GRUP_OCUP,MORT2,TB__PULMONAR,TB_PLEURAL,TB_PLEUROPULM,TB_LIMFATICA,TB_OSTEOART,TB_MILIAR,TB_GENITOURIN,TB_MENINGEA,TB_LARINGEA,TB_ALTRESLOC,PPD,RADIOLOGIA,PPD,BACTERIOL)%>% 
-     unique()
 
 #cip::GARR144010100?????, preguntar a Jordi Real!
-temp<-temp%>% filter(CIP!="GARR144010100" |  CIP=="GARR144010100" & TB_PLEURAL=="2")
+#temp<-temp%>% filter(CIP!="GARR144010100" |  CIP=="GARR144010100" & TB_PLEURAL=="2")
 
 
 
 #24.3.2022
-temp<-etiquetar_valors(temp, variables_factors= conductor_variables,fulla="etiquetes")
+#temp<-etiquetar_valors(temp, variables_factors= conductor_variables,fulla="etiquetes")
 
 
 
 
 
 
-dt_vacunes2<-dt_vacunes %>% transmute(CIP,VACUNES=1)%>% group_by(CIP) %>% slice(1) %>% ungroup()                   
+#dt_vacunes2<-dt_vacunes %>% transmute(CIP,VACUNES=1)%>% group_by(CIP) %>% slice(1) %>% ungroup()                   
 
 
 #conductor_agencia
 
-dades<-dades%>%
-  left_join(temp,by="CIP")%>%
-     left_join(dt_vacunes2,by="CIP")
+#dades<-dades%>%
+#  left_join(temp,by="CIP")
+
+#%>%
+#     left_join(dt_vacunes2,by="CIP")
 
 
-#dt_temp<-dades %>% filter(grup=="Diabetis")
+#dt_#temp<-dades %>% filter(grup=="Diabetis")
 #formu<-formula_compare(x="table2",y="",taulavariables = conductor_variables)
 #descrTable(formu,data=dt_temp,show.p.overall = F,show.n = T, hide.no = T,hide = "No") %>% 
 #  export2md(caption = "Table  2. Baseline characteristics of patients in diabetic cohort")
 
-dades<-mutate_at(dades, vars( starts_with("VACUNES") ), funs( if_else(is.na(.)  ,"No","Si")))
+#dades<-mutate_at(dades, vars( starts_with("VACUNES") ), funs( if_else(is.na(.)  ,"No","Si")))
 
 
 # recodificacio:: MACRO: [AVC+CI+ARTER]    MICRO: [RETINO+NEFRO]
@@ -757,16 +760,16 @@ dades<-
 dades<-
   dades %>% mutate(MICRO=ifelse( DG.DM_OFTALMO_cat=="Si"  | DG.DM_NEFRO_cat=="Si"     ,"Si","No"))
 
-
-
-
-
-
 dades<-
   dades %>% mutate(IMC.valor.cat2=ifelse(IMC.valor.cat=="None"  ,NA,IMC.valor.cat))
 
 #dades<-mutate_at(dades, vars( starts_with("HbA1c_7") ), funs( if_else(.=="No"  | is.na(.)  ,"No","Si")))
 
+
+
+########[29.03.2022]
+dades<-
+  dades %>% mutate(PPD=ifelse(PPD==0 | PPD==9,NA,PPD))
 
 
 
@@ -849,8 +852,8 @@ descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="Si"),show.p.overall = T,show
   export2md(caption = "Tabla  2a. Características TBC en Poblacion Diabetica según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
 
 
-descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="No"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
-  export2md(caption = "Tabla  2b. Características NO TBC en Poblacion Diabetica  según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
+#descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="No"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
+#  export2md(caption = "Tabla  2b. Características NO TBC en Poblacion Diabetica  según grado de control de la DM <7.5% us >=7.5% [Medias,Sd]")
 
 
 #descrTable(formu,data=dadesDM%>% filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1) %>%
