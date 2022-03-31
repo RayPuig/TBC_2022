@@ -1449,7 +1449,7 @@ save(dades,dt_variables, file=here::here(dir_output,"output5.Rdata"))
 
 ```
 
-# Tabla 5. Modelos multivariante (variable HbA1c dependiente del tiempo) de los factores que pueden influir en la aparición de una nueva TBC, en una Población Diabetica
+# Tabla 6. Modelos multivariante (variable HbA1c dependiente del tiempo) de los factores que pueden influir en la aparición de una nueva TBC, en una Población Diabetica
 
 ```{r, include=F,eval = TRUE}
 
@@ -1864,7 +1864,7 @@ summary(fit1)
 
 ```
 
-## Tabla.5a Modelos de Cox dependientes del Tiempo (HBA1c) para la TBC.[Hba1c>7.5+Sexe+Edat+cluster(idp]
+## Tabla.6a Modelos de Cox dependientes del Tiempo (HBA1c) para la TBC.[Hba1c>7.5+Sexe+Edat+cluster(idp]
 
 ```{r MODEL_COX1, include=T,eval = TRUE}
 
@@ -1895,7 +1895,7 @@ cox.zph(fit1)
 
 ```
 
-## Tabla.5b Modelos de Cox dependientes del Tiempo (HBA1c) para la TBC.[Hba1c>8+Sexe+Edat+cluster(idp]
+## Tabla.6b Modelos de Cox dependientes del Tiempo (HBA1c) para la TBC.[Hba1c>8+Sexe+Edat+cluster(idp]
 
 ```{r MODEL_COX2, include=T,eval = TRUE}
 
@@ -1907,7 +1907,7 @@ cox.zph(fit3)
 
 ```
 
-## Tabla.5c Modelos de Cox dependientes del Tiempo (HBA1c) para la TBC.[Hba1c>9+Sexe+Edat+cluster(idp]
+## Tabla.6c Modelos de Cox dependientes del Tiempo (HBA1c) para la TBC.[Hba1c>9+Sexe+Edat+cluster(idp]
 
 ```{r MODEL_COX3, include=T,eval = TRUE}
 
