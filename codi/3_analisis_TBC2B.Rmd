@@ -427,8 +427,6 @@ if (params$metode=="dinamica2" | params$metode=="dinamica") {
 }  
 ```
 
-
-
 ## Flowchart
 
 ```{r flow_filtres,include=T,suppress=T}
@@ -482,15 +480,6 @@ dades<-etiquetar(dades,taulavariables = conductor_variables,camp_descripcio = "D
 
 
 
-
-
-```{r JOPSEP: Caractèristiques TBC segons grau de control DM,include=T}
-
-#[07.03.2022]#
-
-#table(dades_DM$VACUNA)
-
-```
 
 
 
@@ -637,7 +626,7 @@ descrTable(formu,data=dades,show.p.overall = F,show.n = T,method = 2,Q1=0,Q3=1) 
 ```
 
 
-## TABLA 1. Características basales por grupos
+## TABLA 0. Características basales por grupos
 
 - Descriptivo de características basales entre grupos
 
@@ -683,7 +672,7 @@ descrTable(formu,data=dades,show.p.overall = T,show.n = T, hide.no = T,hide = "N
 ```
 
 
-# TABLA 1.TABLA2:  Características basales de los pacientes en cohorte diabetica
+# TABLA 1 :  Características basales de las variables de estudio entre diabetes con y sin TB
 
 ```{r, include=T,eval = T}
 
@@ -787,10 +776,13 @@ descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1
 descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1,show.all = TRUE) %>%
   export2md(caption = "Tabla  1b. Características basales de las variables de estudio entre diabéticos con y sin TBC [Medianas,Min,Max]")
 
+```
 
 
-#table(dadesDM$EV.TBC_cat,dadesDM$DG.TBC_cat)
-#KKK<-dadesDM%>%select(case.id,DG.TBC_cat, EV.TBC_cat)
+# Distribución % dels valores HBA1c en Poblacion Diabetica con y sin TBC 
+
+```{r, include=T,eval = T}
+
 
 
 genera_figures_HTG<-function(dt=dades,subtitul="",lim1=0,lim2=20,bins=150) {
@@ -800,7 +792,7 @@ genera_figures_HTG<-function(dt=dades,subtitul="",lim1=0,lim2=20,bins=150) {
       ggplot(data = dt, aes(HBA1c.valor))+
        geom_histogram(bins = bins,aes(y =1*( ..count../sum(..count..)))) +
         scale_y_continuous(name = "%", labels=scales::percent) +
-          labs(title=paste0("Distribució dels HBA1c "),
+          labs(title=paste0("Distribución HBA1c "),
                subtitle = subtitul, x ="HBA1c ")+
             scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
              scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
@@ -810,33 +802,21 @@ genera_figures_HTG<-function(dt=dades,subtitul="",lim1=0,lim2=20,bins=150) {
 
 }
 
+
 dadesDM2<-dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="Si")
 dadesDM3<-dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="No")
 
 
-dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="Si") %>% genera_figures_HTG("Distribució % dels valors HBA1c  per TBC",lim2=20,bins=18)
-dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="No") %>% genera_figures_HTG("Distribució % dels valors HBA1c  per No TBC",lim2=20)
+dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="Si") %>% genera_figures_HTG("Distribución % dels valores HBA1c en TBC",lim2=20,bins=18)
+dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="No") %>% genera_figures_HTG("Distribución % dels valores HBA1c en No TBC",lim2=20)
 
 
 
-#ggplot(data = dadesDM2, aes(HBA1c.valor))+
-#   geom_histogram(bins = 10,aes(y =1*( ..count../sum(..count..)))) +
-#    scale_y_continuous(name = "%", labels=scales::percent) +
-#      labs(title="Distribució % dels valors HBA1c per decils agrupats per TBC", x ="valors HBA1c", y = "Percentatge")+
-#        scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-#         scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-#           theme_classic()
 
+```
+# TABLA 2:  Características eventos TBC segun grado de control[HbA1c<7.5%,HbA1c>=7.5%] de la DM 
 
-
-#ggplot(data = dadesDM3, aes(HBA1c.valor))+
-#   geom_histogram(bins = 10,aes(y =1*( ..count../sum(..count..)))) +
-#    scale_y_continuous(name = "%", labels=scales::percent) +
-#      labs(title="Distribució % dels valors HBA1c per decils agrupats per No TBC", x ="valors HBA1c", y = "Percentatge")+
-#        scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-#         scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-#           theme_classic()
-
+```{r, include=T,eval = T}
 
 
 
@@ -861,22 +841,12 @@ descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="Si"),show.p.overall = T,show
 
 
 
-#IMC.valor.cat
-
-#dades$DG.AVC_cat [avc]
-#dades$DG.CARD_ISQU_cat
-#dades$DG.ARTPER_cat
-#daddes$DG.DM_OFTALMO_cat
-
-
-#table(dades$IMC.valor.cat,dades$IMC.valor.cat2)
-
 ```
 
-# TABLA 3. Incidencia de TB en pacientes DM y no DM
+
+# TABLA 3. Incidencia de TBC en pacientes DM y no DM
 
 - Incidencia global de TBC (TBC sólo confirmados según datos ASPB)
-
 
 ```{r resultats5, message=FALSE, warning=FALSE, include=T, echo=FALSE,size="huge",eval = T}
 # T BASAL -------------
@@ -910,13 +880,15 @@ res5<-dadesDM %>% split(.$HbA1c_7.5) %>% map_dfr(~Resum_taxa_incidencia(.x,event
 #fet 8.3.2022
 
 res1b %>% bind_rows(res5)  %>%
-  kable(digits = 2,caption = "Tabla 3b. Incidencia de TBc con pacientes DM para HbA1c>=7,5%  ") %>% kableExtra::kable_styling()
+  kable(digits = 2,caption = "Tabla 3. Incidencia de TBC con pacientes DM para HbA1c>=7,5%  ") %>% kableExtra::kable_styling()
 
 
 
 
 
 ```
+
+# TABLA 3b. Hazard Ratio de Tuberculosis con pacientes de DM
 
 
 ```{r resultats6, message=FALSE, warning=FALSE, include=T, echo=FALSE,size="huge",eval=T}
@@ -925,7 +897,7 @@ res1b %>% bind_rows(res5)  %>%
 #descrTable(surv_tbc~grup3,data=dades,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis")
 
 #10.3.2022:
-descrTable(surv_tbc~HbA1c_7.5,data=dadesDM,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Incidència i Hazard Ratio de Tuberculosis pacients amb DM")
+descrTable(surv_tbc~HbA1c_7.5,data=dadesDM,show.ratio = T, byrow = T ,surv = T) %>% export2md(caption = "Hazard Ratio de Tuberculosis pacientes de DM")
 #plot(surv_tbc~HbA1c_7,data=dades,show.ratio = T, byrow = T ,surv = T)
 
 ```
@@ -936,7 +908,7 @@ descrTable(surv_tbc~HbA1c_7.5,data=dadesDM,show.ratio = T, byrow = T ,surv = T) 
 - Grup DM versus control, 
 - DM1 DM2, incident and prevalent versus Control
 
-```{r genero_HR, eval=F, echo=FALSE, message=FALSE, warning=FALSE, include=T, size="huge"}
+```{r genero_HR, echo=FALSE, message=FALSE, warning=FALSE, include=T, size="huge",eval=F}
 # Estimació de HR complets de riscos competitius
 if (params$metode=="dinamica2") cluster="case.id" else cluster=""
 # Ajustos
@@ -1014,7 +986,7 @@ grDevices::dev.off()
 
 
 
-```{r testimputacions, eval=T, include=F}
+```{r testimputacions, eval=F, include=F}
 # generar dades imputades MICE
 dt_temp<-dades %>% 
   select(extreure.variables("imp",conductor_variables))
@@ -1071,6 +1043,8 @@ pp +
 
 
 ```
+
+# TABLA 4. Incidencia acumulada de tuberculosis por control DM
 
 ```{r figura2, include=T,eval = T}
 ## Figura d'incidencia acumulada de TB per grup  control DM
