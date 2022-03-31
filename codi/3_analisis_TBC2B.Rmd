@@ -1124,7 +1124,7 @@ res.cox %>% sjPlot::tab_model(show.p = FALSE)
 
 ```
 
-# Tabla.4b Modelos.Análisis multivariante de los factores que pueden influir en la aparición de una nueva TBC, en una Población Diabetica
+# Tabla 5. Modelos multivariantes de los factores que pueden influir en la aparición de una nueva TBC, en una Población Diabetica
 
 ```{r figura_COX2, include=T, fig.asp=1, results="asis", eval=T, include=T}
 
@@ -1448,8 +1448,8 @@ save(dades,dt_variables, file=here::here(dir_output,"output5.Rdata"))
 
 ```
 
+# Tabla 5. Modelos multivariante (variable HbA1c dependiente del tiempo) de los factores que pueden influir en la aparición de una nueva TBC, en una Población Diabetica
 
-## Dependenet Time Variable DM Cox   HBA1c us TBC
 ```{r, include=F,eval = TRUE}
 
 #############
