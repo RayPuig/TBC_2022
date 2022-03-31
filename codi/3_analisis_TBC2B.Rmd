@@ -779,7 +779,7 @@ descrTable(formu,data=dadesDM,show.p.overall = T,show.n = T,method = 2,Q1=0,Q3=1
 ```
 
 
-# Distribución % dels valores HBA1c en Poblacion Diabetica con y sin TBC 
+# Figura 1. Distribución % dels valores HBA1c en Poblacion Diabetica con y sin TBC 
 
 ```{r, include=T,eval = T}
 
@@ -814,6 +814,7 @@ dades %>% filter(grup=="Diabetis" & EV.TBC_cat=="No") %>% genera_figures_HTG("Di
 
 
 ```
+
 # TABLA 2:  Características eventos TBC segun grado de control[HbA1c<7.5%,HbA1c>=7.5%] de la DM 
 
 ```{r, include=T,eval = T}
@@ -1655,7 +1656,7 @@ analitiques_temps<-analitiques_temps %>% mutate(edat_CAT=case_when(edat<75 ~ "1.
 
 
 ```
-## Dependenet Time Variable DM Cox   HBA1c us TBC    MODEL1[glicada continua]
+
 ```{r MODEL1, include=F,eval = FALSE}
 
 #############
@@ -1671,22 +1672,9 @@ library(survival)
 
 #i)
 fit1 <- coxph(Surv(tstart, tstop, situacio=="TBC") ~ val+sexe+edat+cluster(idp),data=analitiques_temps)
-
-
-
 summary(fit1)
-  
-
-
-
-
 #cox.zph(fit1)
 #plot(cox.zph(fit1))
-
-
-```
-## Dependenet Time Variable DM Cox   HBA1c us TBC    MODEL2[glicada continua]
-```{r MODEL2, include=T,eval = F}
 
 #############
 #[26.3.2021]#
@@ -1709,13 +1697,6 @@ summary(fit1)
 #plot(cox.zph(fit2))
 
 
-
-
-```
-
-## Dependenet Time Variable DM Cox   HBA1c us TBC    MODEL3[glicada >8%]
-```{r MODEL3, include=T,eval = F}
-
 #############
 #[26.3.2021]#
 #############
@@ -1735,13 +1716,6 @@ summary(fit1)
 #cox.zph(fit3)
 #plot(cox.zph(fit3))
 
-
-
-
-```
-## Dependenet Time Variable DM Cox   HBA1c us TBC    MODEL4[glicada >8%]
-```{r MODEL4, include=T,eval = F}
-
 #############
 #[26.3.2021]#
 #############
@@ -1759,12 +1733,6 @@ summary(fit1)
 #fit4
 #cox.zph(fit4)
 #plot(cox.zph(fit4))
-
-
-
-```
-## Dependenet Time Variable DM Cox   HBA1c us TBC    MODEL5[glicada >9%]
-```{r MODEL5, include=T,eval = F}
 
 #############
 #[26.3.2021]#
@@ -1790,10 +1758,6 @@ summary(fit1)
 #cox.zph(fit5)
 #plot(cox.zph(fit5))
 
-```
-## Dependenet Time Variable DM Cox   HBA1c us TBC    MODEL6[glicada >9%]
-```{r MODEL6, include=T,eval = F}
-
 #############
 #[26.3.2021]#
 #############
@@ -1811,14 +1775,6 @@ summary(fit1)
 #fit6
 #cox.zph(fit6)
 #plot(cox.zph(fit6))
-
-
-
-```
-
-## Dependenet Time Variable DM Cox   HBA1c us TBC    MODEL7,8,9,10,11,12,13[glicada >8%,glicada >9%,+edat_CAT(>=75),cluster] + Estrat.
-```{r MODEL7, include=T,eval = F}
-
 #############
 #[30.3.2021]#
 #############
@@ -1869,11 +1825,10 @@ summary(fit1)
 #plot(cox.zph(fit12))
 
 
+
 ```
 
-# 5. Modelos de Cox dependientes del Tiempo (HBA1c) para la TBC
-
-```{r MODEL8, include=T,eval = F}
+```{r MODEL8, include=F,eval = F}
 
 #############
 #[30.3.2021]#
@@ -1906,9 +1861,6 @@ summary(fit1)
 
 #plot(survfit(fit14),ylim=c(0.5,1),lty=0:1)
 
-dadesDM %>% filter(event_tbc==1) %>% select(CIP,TB__PULMONAR,TB_PLEURAL)
-
-names(dadesDM)
 
 ```
 
