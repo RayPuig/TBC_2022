@@ -450,6 +450,7 @@ flow2<-criteris_exclusio_diagrama(dades,taulavariables = conductor_variables,cri
 flow2
 flow2 %>% DiagrammeRsvg::export_svg() %>% charToRaw() %>% rsvg::rsvg() %>% 
   png::writePNG(here::here("figures","flow_chart2.png"))
+
 ```
 
 
@@ -543,6 +544,7 @@ library(grDevices)
 grDevices::png(here::here(dir_figures,"Figure1_esquema.png"))
 pp
 dev.off()
+
 ```
 
 
@@ -762,6 +764,13 @@ dades<-
   dades %>% mutate(PPD=ifelse(PPD==0 | PPD==9,NA,PPD))
 
 
+########[01.04.2022]
+dades<-dades%>%mutate(TIP_TBC=case_when(  
+                          (TB__PULMONAR=="Si" |TB_PLEURAL=="Si" | TB_PLEUROPULM=="Si"| TB_MILIAR=="Si") ~ "TBC PUlmonar",
+                          (TB_LIMFATICA=="Si" |TB_OSTEOART=="Si" | TB_GENITOURIN=="Si"| TB_MENINGEA=="Si"| TB_LARINGEA=="Si" | TB_ALTRESLOC=="Si") ~ "TBC Extra.Pulmonar"))
+
+
+
 
 
 dadesDM<-dades%>% filter(grup=="Diabetis")
@@ -848,9 +857,6 @@ formu3<-formula_compare(x="basalesJosep2",y="HbA1c_9",taulavariables = conductor
 #TB_LARINGEA
 #TB_ALTRESLOC
 
-dadesDM<-dadesDM%>%mutate(TIP_TBC=case_when(  
-                          (TB__PULMONAR=="Si" |TB_PLEURAL=="Si" | TB_PLEUROPULM=="Si"| TB_MILIAR=="Si") ~ "TBC PUlmonar",
-                          (TB_LIMFATICA=="Si" |TB_OSTEOART=="Si" | TB_GENITOURIN=="Si"| TB_MENINGEA=="Si"| TB_LARINGEA=="Si" | TB_ALTRESLOC=="Si") ~ "TBC Extra.Pulmonar"))
 
 
 #table(dadesDM$TIP_TBC)
@@ -867,29 +873,21 @@ dadesDM<-dadesDM%>%mutate(TIP_TBC=case_when(
 #table(dadesDM$TB_ALTRESLOC)                          
                           
                        
-Temp<-dadesDM%>%select(CIP,
-                       TIP_TBC,
-                       TB__PULMONAR,
-                       TB_PLEURAL,
-                       TB_PLEUROPULM,
-                       TB_MILIAR,
-                       TB_LIMFATICA,
-                       TB_OSTEOART,
-                       TB_GENITOURIN,
-                       TB_MENINGEA,
-                       TB_LARINGEA,
-                       TB_ALTRESLOC)
-                                             
-                                             
+#Temp<-dadesDM%>%select(CIP,
+#                       TIP_TBC,
+#                       TB__PULMONAR,
+#                       TB_PLEURAL,
+#                       TB_PLEUROPULM,
+#                       TB_MILIAR,
+#                       TB_LIMFATICA,
+#                       TB_OSTEOART,
+#                       TB_GENITOURIN,
+#                       TB_MENINGEA,
+#                       TB_LARINGEA,
+#                       TB_ALTRESLOC)
+#######################################                                             
+       
                                             
-
-
-
-
-
-
-
-
 descrTable(formu,data=dadesDM%>%filter(EV.TBC_cat=="Si"),show.p.overall = T,show.n = T,method = 1,Q1=0,Q3=1,show.all = TRUE) %>%
   export2md(caption = "Tabla  2a. Características TBC en Poblacion Diabetica [Medias,Sd]")
 
@@ -1266,15 +1264,15 @@ res.cox %>% sjPlot::tab_model(show.p = FALSE)
 
 ## Gràfica estimada del Model de cox
 
-if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ HbA1c_7.5, data=dadesDM) 
-res.cox %>% sjPlot::tab_model(show.p = TRUE)
+#if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ HbA1c_7.5, data=dadesDM) 
+#res.cox %>% sjPlot::tab_model(show.p = TRUE)
 
-if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ HbA1c_7.5+sexe, data=dadesDM) 
-res.cox %>% sjPlot::tab_model(show.p = TRUE)
+#if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ HbA1c_7.5+sexe, data=dadesDM) 
+#res.cox %>% sjPlot::tab_model(show.p = TRUE)
 
 
-if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ HbA1c_7.5+sexe+age, data=dadesDM) 
-res.cox %>% sjPlot::tab_model(show.p = TRUE)
+#if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ HbA1c_7.5+sexe+age, data=dadesDM) 
+#res.cox %>% sjPlot::tab_model(show.p = TRUE)
 
 
 
@@ -1310,7 +1308,7 @@ res.cox %>% sjPlot::tab_model(show.p = TRUE)
 
 
 # Ajustos
-vector_ajustos<-c("ajuste01","ajuste02","ajuste03") %>%stats::setNames(c("Modelo sin ajustar","Modelo 1-HbA1c_8","Modelo 2-HbA1c_8"))  
+vector_ajustos<-c("ajuste01","ajuste02","ajuste03") %>%stats::setNames(c("Modelo sin ajustar","Modelo : HbA1c>=7.5+Sexo","Modelo : HbA1c>=7.5+Sexo+Edad"))  
 # Models de COX 
 taula_models_COX<-vector_ajustos %>% purrr::map_df(~extreure_HR(a="HbA1c_7.5",x=.x,event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariables = conductor_variables,c=""),.id="Model")
 taula_models_COX%>% 
@@ -1318,7 +1316,7 @@ taula_models_COX%>%
   kableExtra::kable_styling()
 
 # Ajustos
-vector_ajustos<-c("ajuste1","ajuste2","ajuste3","ajuste4","ajuste5","ajuste6","ajuste7") %>%stats::setNames(c("Modelo 1-HbA1c_7.5","Modelo 2-HbA1c_7.5","Modelo 3-HbA1c_7.5","Modelo 4-HbA1c_7.5","Modelo 5-HbA1c_7.5","Modelo 6-HbA1c_7.5","Modelo 7-HbA1c_7.5"))  
+vector_ajustos<-c("ajuste1","ajuste2","ajuste3","ajuste4","ajuste5","ajuste6","ajuste7") %>%stats::setNames(c("Modelo 1-HbA1c>=7.5","Modelo 2-HbA1c>=7.5","Modelo 3-HbA1c>=7.5","Modelo 4-HbA1c>=7.5","Modelo 5-HbA1c>=7.5","Modelo 6-HbA1c>=7.5","Modelo 7-HbA1c>=7.5"))  
 # Models de COX 
 taula_models_COX<-vector_ajustos %>% purrr::map_df(~extreure_HR(a="HbA1c_7.5",x=.x,event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariables = conductor_variables,c=""),.id="Model")
 taula_models_COX%>% 
@@ -1328,7 +1326,7 @@ taula_models_COX%>%
 
 
 # Ajustos
-vector_ajustos<-c("ajuste04","ajuste05") %>%stats::setNames(c("Modelo 1-HbA1c_9","Modelo 2-HbA1c_9"))  
+vector_ajustos<-c("ajuste04","ajuste05") %>%stats::setNames(c("Modelo : HbA1c>=9+Sexo","Modelo : HbA1c>=9+Sexo+Edad"))  
 # Models de COX 
 taula_models_COX<-vector_ajustos %>% purrr::map_df(~extreure_HR(a="HbA1c_9",x=.x,event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariables = conductor_variables,c=""),.id="Model")
 taula_models_COX%>% 
@@ -1336,7 +1334,7 @@ taula_models_COX%>%
   kableExtra::kable_styling()
 
 # Ajustos
-vector_ajustos<-c("ajuste8","ajuste9","ajuste10","ajuste11","ajuste12","ajuste13","ajuste14") %>%stats::setNames(c("Modelo 1-HbA1c_9","Modelo 2-HbA1c_9","Modelo 3-HbA1c_9","Modelo 4-HbA1c_9","Modelo 5-HbA1c_9","Modelo 6-HbA1c_9","Modelo 7-HbA1c_9"))  
+vector_ajustos<-c("ajuste8","ajuste9","ajuste10","ajuste11","ajuste12","ajuste13","ajuste14") %>%stats::setNames(c("Modelo 1-HbA1c>=9","Modelo 2-HbA1c>=9","Modelo 3-HbA1c>=9","Modelo 4-HbA1c>=9","Modelo 5-HbA1c>=9","Modelo 6-HbA1c>=9","Modelo 7-HbA1c>=9"))  
 # Models de COX 
 taula_models_COX<-vector_ajustos %>% purrr::map_df(~extreure_HR(a="HbA1c_9",x=.x,event = "event_tbc",t="temps_tbc",d=dadesDM,taulavariables = conductor_variables,c=""),.id="Model")
 taula_models_COX%>% 
@@ -1349,40 +1347,40 @@ taula_models_COX%>%
 
 # MODEL1::n=
 #[surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5
-if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
-res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final1:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
+#if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
+#res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final1:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
 
 # MODEL2::n=
 #[surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+HbA1c_7.5]
-if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+HbA1c_7.5, data=dadesDM) 
-res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final2:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
+#if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+MICRO+DG.TAB_cat+DG.ALCOHOL_cat+HbA1c_7.5, data=dadesDM) 
+#res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final2:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
 
 # MODEL3::n=
 #[surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5]
-if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
-res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final3:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
+#if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
+#res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final3:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
 
 
 # MODEL4::n=
 #[surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+HbA1c_7.5]
-if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+HbA1c_7.5, data=dadesDM) 
-res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final4:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
+#if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+DG.ALCOHOL_cat+HbA1c_7.5, data=dadesDM) 
+#res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final4:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
 
 # MODEL5::n=
 #[surv_tbc ~ sexe+age+DM_anys+MACRO+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5]
-if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
-res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final5:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
+#if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.ALCOHOL_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
+#res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final5:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
 
 # MODEL6::n=
 #[surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+IMC.valor+HbA1c_7.5]
-if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
-res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final6:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
+#if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+DG.TAB_cat+IMC.valor+HbA1c_7.5, data=dadesDM) 
+#res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final6:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
 
 
 # MODEL7::n=
 #surv_tbc ~ sexe+age+DM_anys+MACRO+HbA1c_7.5]
-if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+HbA1c_7.5, data=dadesDM) 
-res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final6:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
+#if (params$metode=="dinamica2") res.cox<-coxph(surv_tbc ~ sexe+age+DM_anys+MACRO+HbA1c_7.5, data=dadesDM) 
+#res.cox %>% sjPlot::tab_model(show.p = TRUE,title = "Modelo Final6:Analisis Multivariante de los factors con pacientes DM  que pueden  influir a la TBC")
 
 #----------------------------------------------------------------------------------------#
 
