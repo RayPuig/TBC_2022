@@ -766,7 +766,7 @@ dades<-
 
 ########[01.04.2022]
 dades<-dades%>%mutate(TIP_TBC=case_when(  
-                          (TB__PULMONAR=="Si" |TB_PLEURAL=="Si" | TB_PLEUROPULM=="Si"| TB_MILIAR=="Si") ~ "TBC PUlmonar",
+                          (TB__PULMONAR=="Si" |TB_PLEURAL=="Si" | TB_PLEUROPULM=="Si"| TB_MILIAR=="Si") ~ "TBC Pulmonar",
                           (TB_LIMFATICA=="Si" |TB_OSTEOART=="Si" | TB_GENITOURIN=="Si"| TB_MENINGEA=="Si"| TB_LARINGEA=="Si" | TB_ALTRESLOC=="Si") ~ "TBC Extra.Pulmonar"))
 
 
